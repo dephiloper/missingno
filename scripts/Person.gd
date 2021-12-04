@@ -54,6 +54,7 @@ var SEXUALITY = [
 var age
 
 var traits
+var trait_relations
 
 var looks
 var preference
@@ -64,7 +65,7 @@ var sex
 var sexuality
 
 func _ready():
-	init(10, null)
+	init($TraitRelations, 10, null)
 
 func to_set(arr: Array):
 	for i in range(0, len(arr)):
@@ -74,7 +75,26 @@ func to_set(arr: Array):
 				arr.remove(i)
 				break
 
-func init(day: int, sex_):
+func is_compatible(trait_a, trait_b):
+	var a = TRAIT[trait_a]
+	var b = TRAIT[trait_b]
+	for i in trait_relations.relations:
+		if a == i[0] and b == i[1]:
+			return i[2] >= 0.0
+
+func to_compatible(arr: Array):
+	for i in range(0, len(arr)):
+		var inv = len(arr) - i - 1
+		for j in range(0, i):
+			var trait_i = arr[i]
+			var trait_j = arr[j]
+			if not is_compatible(trait_i, trait_j):
+				arr.remove(i)
+				break
+
+func init(trait_relations_, day: int, sex_):
+	trait_relations = trait_relations_
+	
 	age = randi() % (MAX_AGE - MIN_AGE) + MIN_AGE
 	zodiac = randi() % len(ZODIAC)
 	sex = sex_ if sex_ else randi() % len(SEX)
@@ -84,6 +104,7 @@ func init(day: int, sex_):
 	for i in range(0, day):
 		traits.push_back(randi() % len(TRAIT))
 		to_set(traits)
+		to_compatible(traits)
 	
 	looks = {
 		hair_length = randi() % len(LOOK.HAIR_LENGTH),
