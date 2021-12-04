@@ -16,7 +16,13 @@ _global_script_class_icons={
 [application]
 
 config/name="missingno"
+run/main_scene="res://scenes/Game.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Person="*res://scripts/Person.gd"
+TraitRelations="*res://scripts/TraitRelations.gd"
 
 [rendering]
 

@@ -2,7 +2,7 @@ extends Node2D
 
 var relations = {}
 
-func _ready():
+func _init():
 	var file = File.new()
 	file.open("traits.json", file.READ)
 	var text = file.get_as_text()

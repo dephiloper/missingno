@@ -9,16 +9,16 @@ const TRAIT = [
 ]
 
 const LOOK = {
-	HAIR_LENGTH = [
+	hair_length = [
 		"Short Hair",
 		"Long Hair",
 	],
-	HAIR_COLOR = [
+	hair_color = [
 		"Blonde",
 		"Brown",
 		"Red",
 	],
-	EYE_COLOR = [
+	eye_color = [
 		"Brown",
 		"Blue",
 		"Green",
@@ -46,15 +46,14 @@ var SEX = [
 ]
 
 var SEXUALITY = [
-	"Hetero",
-	"Homo",
+	"Female",
+	"Male",
 	"Bi",
 ]
 
 var age
 
 var traits
-var trait_relations
 
 var looks
 var preference
@@ -75,7 +74,7 @@ func to_set(arr: Array):
 func is_compatible(trait_a, trait_b):
 	var a = TRAIT[trait_a]
 	var b = TRAIT[trait_b]
-	for i in trait_relations.relations:
+	for i in TraitRelations.relations:
 		if a == i[0] and b == i[1]:
 			return i[2] >= 0.0
 
@@ -89,24 +88,28 @@ func to_compatible(arr: Array):
 				arr.remove(i)
 				break
 
-func init(trait_relations_, day: int, sex_):
-	trait_relations = trait_relations_
-	
-	age = randi() % (MAX_AGE - MIN_AGE) + MIN_AGE
+func rand_traits_count(day):
+	var acc = 0
+	for i in range(day):
+		acc += 1 if randf() < .5 else 0
+	return acc
+
+func init(day: int, sex_):
+	age = randi() % (MAX_AGE - MIN_AGE + 1) + MIN_AGE
 	zodiac = randi() % len(ZODIAC)
 	sex = sex_ if sex_ else randi() % len(SEX)
 	sexuality = randi() % len(SEXUALITY)
 	
 	traits = []
-	for i in range(0, day):
+	for i in range(rand_traits_count(day)):
 		traits.push_back(randi() % len(TRAIT))
 		to_set(traits)
 		to_compatible(traits)
 	
 	looks = {
-		hair_length = randi() % len(LOOK.HAIR_LENGTH),
-		hair_color = randi() % len(LOOK.HAIR_COLOR),
-		eye_color = randi() % len(LOOK.EYE_COLOR),
+		hair_length = randi() % len(LOOK.hair_length),
+		hair_color = randi() % len(LOOK.hair_color),
+		eye_color = randi() % len(LOOK.eye_color),
 	}
 	
 	var key = LOOK.keys()[randi() % len(LOOK.keys())]
@@ -127,7 +130,7 @@ func dump():
 	for trait in traits:
 		print("\t\t", TRAIT[trait])
 	print("\tlooks")
-	print("\t\thair length: ", LOOK.HAIR_LENGTH[looks.hair_length])
-	print("\t\thair color: ", LOOK.HAIR_COLOR[looks.hair_color])
-	print("\t\teye color: ", LOOK.EYE_COLOR[looks.eye_color])
+	print("\t\thair length: ", LOOK.hair_length[looks.hair_length])
+	print("\t\thair color: ", LOOK.hair_color[looks.hair_color])
+	print("\t\teye color: ", LOOK.eye_color[looks.eye_color])
 	print("\tpreference: ", preference.key, " ", LOOK[preference.key][preference.value])

@@ -3,5 +3,7 @@ extends Node2D
 func _ready():
 	randomize()
 	
-	var day = 5
-	$Person.init($TraitRelations, day, null)
+	var day = 3
+	$Person1.init(day, null)
+	$Person2.init(day, null)
+	$Match.match_people(day, $Person1, $Person2)
