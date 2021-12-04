@@ -41,11 +41,10 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		if (event.position.x >= (global_position.x + -width/2) and event.position.x < (global_position.x + width/2)) and \
-			((event.position.y - global_position.y) >= -height/2 and (event.position.y - global_position.y) < height/2):
-			print((event.position.y - global_position.y) >= -height/2 and (event.position.y - global_position.y) < height/2)
-			var val = (event.position.x - global_position.x) / (width/2) * sheet_count/2 + sheet_count/2
-			val = ceil(val+0.01)
+		if (event.position.x >= global_position.x + -width / 2 and event.position.x < global_position.x + width / 2) and \
+			(event.position.y - global_position.y >= -height / 2 and event.position.y - global_position.y < height / 2):
+			var val = (event.position.x - global_position.x) / (width / 2) * sheet_count / 2 + sheet_count / 2
+			val = ceil(val + 0.01)
 			selected = val - 1
 		else:
 			selected = -1
