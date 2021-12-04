@@ -64,9 +64,6 @@ var zodiac
 var sex
 var sexuality
 
-func _ready():
-	init($TraitRelations, 10, null)
-
 func to_set(arr: Array):
 	for i in range(0, len(arr)):
 		var inv = len(arr) - i - 1
