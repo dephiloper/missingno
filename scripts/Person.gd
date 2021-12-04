@@ -64,7 +64,7 @@ var sex
 var sexuality
 
 func _ready():
-	init(3)
+	init(10, null)
 
 func to_set(arr: Array):
 	for i in range(0, len(arr)):
@@ -74,10 +74,10 @@ func to_set(arr: Array):
 				arr.remove(i)
 				break
 
-func init(day: int):
+func init(day: int, sex_):
 	age = randi() % (MAX_AGE - MIN_AGE) + MIN_AGE
 	zodiac = randi() % len(ZODIAC)
-	sex = randi() % len(SEX)
+	sex = sex_ if sex_ else randi() % len(SEX)
 	sexuality = randi() % len(SEXUALITY)
 	
 	traits = []
@@ -101,15 +101,15 @@ func init(day: int):
 
 func dump():
 	print("person")
-	print("\tage ", age)
-	print("\tzodiac ", ZODIAC[zodiac])
-	print("\tsex ", SEX[sex])
-	print("\tsexuality ", SEXUALITY[sexuality])
+	print("\tage: ", age)
+	print("\tzodiac: ", ZODIAC[zodiac])
+	print("\tsex: ", SEX[sex])
+	print("\tsexuality: ", SEXUALITY[sexuality])
 	print("\ttraits")
 	for trait in traits:
 		print("\t\t", TRAIT[trait])
 	print("\tlooks")
-	print("\t\thair length ", LOOK.HAIR_LENGTH[looks.hair_length])
-	print("\t\thair color ", LOOK.HAIR_COLOR[looks.hair_color])
-	print("\t\teye color ", LOOK.EYE_COLOR[looks.eye_color])
-	print("\tpreference ", preference.key, " ", LOOK[preference.key][preference.value])
+	print("\t\thair length: ", LOOK.HAIR_LENGTH[looks.hair_length])
+	print("\t\thair color: ", LOOK.HAIR_COLOR[looks.hair_color])
+	print("\t\teye color: ", LOOK.EYE_COLOR[looks.eye_color])
+	print("\tpreference: ", preference.key, " ", LOOK[preference.key][preference.value])
